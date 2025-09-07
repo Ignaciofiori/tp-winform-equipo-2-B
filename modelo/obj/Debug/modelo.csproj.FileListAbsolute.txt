@@ -1,0 +1,6 @@
+C:\Users\nacho\Desktop\Work\UTN\Programacion3\Semana3-4\Front\modelo\bin\Debug\modelo.dll
+C:\Users\nacho\Desktop\Work\UTN\Programacion3\Semana3-4\Front\modelo\bin\Debug\modelo.pdb
+C:\Users\nacho\Desktop\Work\UTN\Programacion3\Semana3-4\Front\modelo\obj\Debug\modelo.csproj.AssemblyReference.cache
+C:\Users\nacho\Desktop\Work\UTN\Programacion3\Semana3-4\Front\modelo\obj\Debug\modelo.csproj.CoreCompileInputs.cache
+C:\Users\nacho\Desktop\Work\UTN\Programacion3\Semana3-4\Front\modelo\obj\Debug\modelo.dll
+C:\Users\nacho\Desktop\Work\UTN\Programacion3\Semana3-4\Front\modelo\obj\Debug\modelo.pdb
