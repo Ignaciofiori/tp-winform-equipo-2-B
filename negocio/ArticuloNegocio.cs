@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using modelo;
 
 namespace negocio
+    //aca se consultan la base de datos
 {
     public class ArticuloNegocio
     {   //primer Metodo Vacio del articuloNegocio
