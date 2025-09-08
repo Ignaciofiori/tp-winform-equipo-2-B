@@ -8,7 +8,7 @@ namespace modelo
 {
     public class Imagen
     {
-        public int ID { get; set; }
+        public int Id { get; set; }
         public int IdArticulo { get; set; } //se relaciona con Articulos
         public string ImagenURL { get; set; } //url de la imagen??
     }

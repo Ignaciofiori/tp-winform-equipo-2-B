@@ -13,9 +13,15 @@ namespace modelo
         public string Descripcion { get; set; }
         public decimal Precio { get; set; }
 
-        //Imagen class Imagen
         //Marca class Marca
-        //Categoria class Categoria
+        public int IdMarca { get; set; }
+        public Marca Marca { get; set; }
 
+        //Categoria class Categoria
+        public int IdCategoria { get; set; }
+        public Categoria Categoria { get; set; }
+
+        //Imagen class Imagen
+        public List<Imagen> Imagenes { get; set; }
     }
 }
