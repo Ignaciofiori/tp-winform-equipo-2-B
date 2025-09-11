@@ -15,9 +15,17 @@ namespace WindowsFormsFront
 {
     public partial class ArticuloCrearForm : Form
     {
+        private Articulo articulo = null;
         public ArticuloCrearForm()
         {
             InitializeComponent();
+        }
+
+        public ArticuloCrearForm(Articulo articulo)
+        {
+            InitializeComponent();
+            this.articulo = articulo;
+            Text = "Modificar Articulo";
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -39,6 +47,24 @@ namespace WindowsFormsFront
             MarcaArticuloComboBox.DataSource = listaMarcas;
             MarcaArticuloComboBox.DisplayMember = "Descripcion";
             MarcaArticuloComboBox.ValueMember = "Id";
+
+           // CategoriaArticuloComboBox.DataSource = listaCategorias;
+
+            if (articulo != null)
+            {
+                //Text = "Modificar Articulo";
+                CodArticuloTextBox.Text = articulo.CodigoArticulo;
+                NombreArticuloTextBox.Text = articulo.Nombre;
+                DescripcionArticuloTextBox.Text = articulo.Descripcion;
+                PrecioNumericUpDown.Value = articulo.Precio;
+                CategoriaArticuloComboBox.SelectedValue = articulo.Categoria.Id;
+                MarcaArticuloComboBox.SelectedValue = articulo.Marca.Id;
+                //CrearArticuloButton.Text = "Modificar";
+                ///Falta modificar cambiar imagen
+                CategoriaArticuloComboBox.SelectedValue = articulo.Categoria.Id;
+                MarcaArticuloComboBox.SelectedValue = articulo.Marca.Id;
+
+            }
 
         }
 
@@ -83,6 +109,7 @@ namespace WindowsFormsFront
                 negocio.agregarArticulo(articuloNuevo);
                 MessageBox.Show("Articulo COD: --- " + articuloNuevo.CodigoArticulo + " ---Agregado Correctamente!!");
                 Close();
+
             }
             catch (Exception ex)
             {

@@ -42,5 +42,19 @@ namespace WindowsFormsFront
             ArticuloCrearForm altaArticulo = new ArticuloCrearForm();
             altaArticulo.ShowDialog();
         }
+
+        private void dgvMarcas_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            
+        }
+
+        private void btnModificar_Click(object sender, EventArgs e)
+        {
+            Articulo seleccionado;
+            seleccionado = (Articulo)dgvArticulos.CurrentRow.DataBoundItem;
+
+            ArticuloCrearForm modificar = new ArticuloCrearForm(seleccionado);
+            modificar.ShowDialog();
+        }
     }
 }
