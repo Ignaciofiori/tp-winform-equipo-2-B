@@ -16,6 +16,7 @@ namespace WindowsFormsFront
     {
         private List<Categoria> listaCategorias;
         private List<Articulo> listaArticulos;
+        private List<Marca> listaMarcas;
         public FormPrincipal()
         {
             InitializeComponent();
@@ -30,6 +31,10 @@ namespace WindowsFormsFront
             ArticuloNegocio articuloNegocio = new ArticuloNegocio();
             listaArticulos = articuloNegocio.ListarArticulos();
             dgvArticulos.DataSource = listaArticulos;
+
+            MarcaNegocio marcaNegocio = new MarcaNegocio();
+            listaMarcas = marcaNegocio.listarMarcas();
+            dgvMarcas.DataSource= listaMarcas;
         }
     }
 }
