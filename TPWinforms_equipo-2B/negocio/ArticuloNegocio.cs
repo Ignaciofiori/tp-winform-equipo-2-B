@@ -177,15 +177,23 @@ namespace negocio
                             break;
                     }
                 }
+                else if(campo == "Id")
+                {
+                    consulta += " AND A.Id = " + filtro;
+                }
+                else if(campo == "Codigo")
+                {
+                    consulta += "AND A.Codigo = '" + filtro + "'";
+                }
 
-                datos.setearConsulta(consulta);
+                    datos.setearConsulta(consulta);
                 datos.ejecutarLectura();
 
                 while(datos.Lector.Read())
                 {
                     Articulo aux = new Articulo();
                     aux.Id = (int)datos.Lector["Id"];
-                    aux.Codigo = (string)datos.Lector["Codigo"];
+                    aux.CodigoArticulo = (string)datos.Lector["Codigo"];
                     aux.Nombre = (string)datos.Lector["Nombre"];
                     aux.Descripcion = (string)datos.Lector["Descripcion"];
                     aux.Precio = (decimal)datos.Lector["Precio"];
