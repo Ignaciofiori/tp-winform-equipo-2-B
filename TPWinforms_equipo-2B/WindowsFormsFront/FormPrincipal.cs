@@ -36,5 +36,11 @@ namespace WindowsFormsFront
             listaMarcas = marcaNegocio.listarMarcas();
             dgvMarcas.DataSource= listaMarcas;
         }
+
+        private void btnAgregar_Click(object sender, EventArgs e)
+        {   
+            ArticuloCrearForm altaArticulo = new ArticuloCrearForm();
+            altaArticulo.ShowDialog();
+        }
     }
 }

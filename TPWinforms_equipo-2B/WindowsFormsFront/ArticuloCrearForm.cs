@@ -80,16 +80,12 @@ namespace WindowsFormsFront
                 articuloNuevo.Marca = (Marca)MarcaArticuloComboBox.SelectedItem;
                 articuloNuevo.Categoria = (Categoria)CategoriaArticuloComboBox.SelectedItem;
 
-
-                
                 negocio.agregarArticulo(articuloNuevo);
                 MessageBox.Show("Articulo COD: --- " + articuloNuevo.CodigoArticulo + " ---Agregado Correctamente!!");
                 Close();
-
             }
             catch (Exception ex)
             {
-
                 MessageBox.Show(ex.ToString());
             }
         }
