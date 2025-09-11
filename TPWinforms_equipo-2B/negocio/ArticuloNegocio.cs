@@ -206,7 +206,7 @@ namespace negocio
                 {
                     Articulo aux = new Articulo();
                     aux.Id = (int)datos.Lector["Id"];
-                    if (!(datos.Lector["Codigo"] is DBNull))
+                   // if (!(datos.Lector["Codigo"] is DBNull))
                         aux.CodigoArticulo = (string)datos.Lector["Codigo"];
                     if (!(datos.Lector["Nombre"] is DBNull))
                         aux.Nombre = (string)datos.Lector["Nombre"];
@@ -216,11 +216,11 @@ namespace negocio
                         aux.Precio = (decimal)datos.Lector["Precio"];
 
                     aux.Marca = new Marca();
-                    if (!(datos.Lector["Marca"] is DBNull))
+                    //if (!(datos.Lector["Marca"] is DBNull))
                         aux.Marca.Descripcion = (string)datos.Lector["Marca"];
 
                     aux.Categoria = new Categoria();
-                    if (!(datos.Lector["Categoria"] is DBNull))
+                    //if (!(datos.Lector["Categoria"] is DBNull))
                         aux.Categoria.Descripcion = (string)datos.Lector["Categoria"];
 
                     aux.Imagenes = imagenNegocio.ListarImagenesPorArticulo(aux.Id);

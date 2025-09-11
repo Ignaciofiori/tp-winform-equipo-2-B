@@ -24,17 +24,30 @@ namespace WindowsFormsFront
 
         private void FormPrincipal_Load(object sender, EventArgs e)
         {
-            CategoriaNegocio negocioCategoria = new CategoriaNegocio();
-            listaCategorias = negocioCategoria.listarCategorias();
-            dgvCategorias.DataSource = listaCategorias;
+            
 
-            ArticuloNegocio articuloNegocio = new ArticuloNegocio();
-            listaArticulos = articuloNegocio.ListarArticulos();
-            dgvArticulos.DataSource = listaArticulos;
+            try
+            {
+                CategoriaNegocio negocioCategoria = new CategoriaNegocio();
+                listaCategorias = negocioCategoria.listarCategorias();
+                dgvCategorias.DataSource = listaCategorias;
 
-            MarcaNegocio marcaNegocio = new MarcaNegocio();
-            listaMarcas = marcaNegocio.listarMarcas();
-            dgvMarcas.DataSource= listaMarcas;
+                ArticuloNegocio articuloNegocio = new ArticuloNegocio();
+                listaArticulos = articuloNegocio.ListarArticulos();
+                dgvArticulos.DataSource = listaArticulos;
+
+
+                MarcaNegocio marcaNegocio = new MarcaNegocio();
+                listaMarcas = marcaNegocio.listarMarcas();
+                dgvMarcas.DataSource = listaMarcas;
+
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.ToString());
+            }  
+            
         }
 
         private void btnAgregar_Click(object sender, EventArgs e)
