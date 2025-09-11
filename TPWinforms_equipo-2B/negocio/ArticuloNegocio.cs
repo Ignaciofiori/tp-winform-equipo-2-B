@@ -23,20 +23,33 @@ namespace negocio
                 while (datos.Lector.Read())
                 {
                     Articulo aux = new Articulo();
+                    //id
                     aux.Id = (int)datos.Lector["Id"];
-                    aux.CodigoArticulo = (string)datos.Lector["Codigo"];
-                    aux.Nombre = (string)datos.Lector["Nombre"];
-                    aux.Descripcion = (string)datos.Lector["Descripcion"];
-                    aux.Precio = (decimal)datos.Lector["Precio"];
+                    //Codigo
+                    //validacion de null
+                    if (!(datos.Lector["Codigo"] is DBNull))
+                        aux.CodigoArticulo = (string)datos.Lector["Codigo"];
+                    //NOMBRE
+                    if (!(datos.Lector["Nombre"] is DBNull))
+                        aux.Nombre = (string)datos.Lector["Nombre"];
+                    //Descripcion
+                    if (!(datos.Lector["Descripcion"] is DBNull))
+                        aux.Descripcion = (string)datos.Lector["Descripcion"];
+                    //Precio
+                    if (!(datos.Lector["Precio"] is DBNull))
+                        aux.Precio = (decimal)datos.Lector["Precio"];
 
+                    //Marca
                     aux.Marca = new Marca();
-                    aux.Marca.Descripcion = (string)datos.Lector["Marca"];
-                    aux.Marca.Id = (int)datos.Lector["IdMarca"];
-
+                    if (!(datos.Lector["Marca"] is DBNull))
+                        aux.Marca.Descripcion = (string)datos.Lector["Marca"];
+                        aux.Marca.Id = (int)datos.Lector["IdMarca"];
+                    //Categoria
                     aux.Categoria = new Categoria();
-                    aux.Categoria.Descripcion = (string)datos.Lector["Categoria"];
-                    aux.Categoria.Id = (int)datos.Lector["IdCategoria"];
-
+                    if (!(datos.Lector["Categoria"] is DBNull))
+                        aux.Categoria.Descripcion = (string)datos.Lector["Categoria"];
+                        aux.Categoria.Id = (int)datos.Lector["IdCategoria"];
+                    //Imagenes
                     aux.Imagenes = imagenNegocio.ListarImagenesPorArticulo(aux.Id);
 
                     lista.Add(aux);
@@ -193,16 +206,22 @@ namespace negocio
                 {
                     Articulo aux = new Articulo();
                     aux.Id = (int)datos.Lector["Id"];
-                    aux.CodigoArticulo = (string)datos.Lector["Codigo"];
-                    aux.Nombre = (string)datos.Lector["Nombre"];
-                    aux.Descripcion = (string)datos.Lector["Descripcion"];
-                    aux.Precio = (decimal)datos.Lector["Precio"];
+                    if (!(datos.Lector["Codigo"] is DBNull))
+                        aux.CodigoArticulo = (string)datos.Lector["Codigo"];
+                    if (!(datos.Lector["Nombre"] is DBNull))
+                        aux.Nombre = (string)datos.Lector["Nombre"];
+                    if (!(datos.Lector["Descripcion"] is DBNull))
+                        aux.Descripcion = (string)datos.Lector["Descripcion"];
+                    if (!(datos.Lector["Precio"] is DBNull))
+                        aux.Precio = (decimal)datos.Lector["Precio"];
 
                     aux.Marca = new Marca();
-                    aux.Marca.Descripcion = (string)datos.Lector["Marca"];
+                    if (!(datos.Lector["Marca"] is DBNull))
+                        aux.Marca.Descripcion = (string)datos.Lector["Marca"];
 
                     aux.Categoria = new Categoria();
-                    aux.Categoria.Descripcion = (string)datos.Lector["Categoria"];
+                    if (!(datos.Lector["Categoria"] is DBNull))
+                        aux.Categoria.Descripcion = (string)datos.Lector["Categoria"];
 
                     aux.Imagenes = imagenNegocio.ListarImagenesPorArticulo(aux.Id);
 
