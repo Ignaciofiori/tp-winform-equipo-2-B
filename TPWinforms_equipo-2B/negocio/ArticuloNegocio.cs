@@ -107,5 +107,109 @@ namespace negocio
             }
         }
 
+        public List<Articulo> BuscarArticulo(string campo, string criterio, string filtro)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            List<Articulo> lista = new List<Articulo>();
+            ImagenNegocio imagenNegocio = new ImagenNegocio();
+
+            try
+            {
+                string consulta = "SELECT A.Id, A.Codigo, A.Nombre, A.Descripcion, M.Descripcion as Marca, C.Descripcion as Categoria, A.Precio, A.IdCategoria, A.IdMarca FROM ARTICULOS A, MARCAS M, CATEGORIAS C WHERE A.IdMarca = M.Id AND A.IdCategoria = C.Id";
+
+                if (campo == "Precio")
+                {
+                    switch (criterio)
+                    {
+                        case "Mayor a":
+                            consulta += "AND A.Precio > " + filtro;
+                            break;
+                        case "Menor a":
+                            consulta += "AND A.Precio < " + filtro;
+                            break;
+                        default:
+                            consulta += "AND A.Precio = " + filtro;
+                            break;
+                    }
+                }
+                else if (campo == "Nombre")
+                {
+                    switch (criterio)
+                    {
+                        case "Comienza con":
+                            consulta += " AND A.Nombre like '" + filtro + "%'";
+                            break;
+                        case "Termina con":
+                            consulta += " AND A.Nombre like '%" + filtro + "'";
+                            break;
+                        default:
+                            consulta += " AND A.Nombre like '%" + filtro + "%'";
+                            break;
+                    }
+                }
+                else if (campo == "Descripcion")
+                {
+                    switch (criterio)
+                    {
+                        case "Comienza con":
+                            consulta += " AND A.Descripcion like '" + filtro + "%'";
+                            break;
+                        case "Termina con":
+                            consulta += " AND A.Descripcion like '%" + filtro + "'";
+                            break;
+                        default:
+                            consulta += " AND A.Descripcion like '%" + filtro + "%'";
+                            break;
+                    }
+                }
+                else if (campo == "Marca")
+                {
+                    switch (criterio)
+                    {
+                        case "Comienza con":
+                            consulta += " AND M.Descripcion like '" + filtro + "%'";
+                            break;
+                        case "Termina con":
+                            consulta += " AND M.Descripcion like '%" + filtro + "'";
+                            break;
+                        default:
+                            consulta += " AND M.Descripcion like '%" + filtro + "%'";
+                            break;
+                    }
+                }
+
+                datos.setearConsulta(consulta);
+                datos.ejecutarLectura();
+
+                while(datos.Lector.Read())
+                {
+                    Articulo aux = new Articulo();
+                    aux.Id = (int)datos.Lector["Id"];
+                    aux.Codigo = (string)datos.Lector["Codigo"];
+                    aux.Nombre = (string)datos.Lector["Nombre"];
+                    aux.Descripcion = (string)datos.Lector["Descripcion"];
+                    aux.Precio = (decimal)datos.Lector["Precio"];
+
+                    aux.Marca = new Marca();
+                    aux.Marca.Descripcion = (string)datos.Lector["Marca"];
+
+                    aux.Categoria = new Categoria();
+                    aux.Categoria.Descripcion = (string)datos.Lector["Categoria"];
+
+                    aux.Imagenes = imagenNegocio.ListarImagenesPorArticulo(aux.Id);
+
+                    lista.Add(aux);
+                }
+                return lista;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
     }
 }
