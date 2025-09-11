@@ -99,15 +99,27 @@ namespace WindowsFormsFront
             Articulo articuloNuevo = new Articulo();
             try
             {
-                articuloNuevo.CodigoArticulo = CodArticuloTextBox.Text;
-                articuloNuevo.Nombre = NombreArticuloTextBox.Text;
-                articuloNuevo.Descripcion = DescripcionArticuloTextBox.Text;
-                articuloNuevo.Precio = PrecioNumericUpDown.Value;
-                articuloNuevo.Marca = (Marca)MarcaArticuloComboBox.SelectedItem;
-                articuloNuevo.Categoria = (Categoria)CategoriaArticuloComboBox.SelectedItem;
+                if (articulo == null)
+                    articuloNuevo = new Articulo();
 
-                negocio.agregarArticulo(articuloNuevo);
-                MessageBox.Show("Articulo COD: --- " + articuloNuevo.CodigoArticulo + " ---Agregado Correctamente!!");
+                articulo.CodigoArticulo = CodArticuloTextBox.Text;
+                articulo.Nombre = NombreArticuloTextBox.Text;
+                articulo.Descripcion = DescripcionArticuloTextBox.Text;
+                articulo.Precio = PrecioNumericUpDown.Value;
+                articulo.Marca = (Marca)MarcaArticuloComboBox.SelectedItem;
+                articulo.Categoria = (Categoria)CategoriaArticuloComboBox.SelectedItem;
+
+                if (articulo.Id != 0)
+                {
+                    negocio.modificarArticulo(articulo);
+                    MessageBox.Show("Modificado correctamente!!");
+                }
+                else
+                {
+                    negocio.agregarArticulo(articuloNuevo);
+                    MessageBox.Show("Agregado correctamente!!");
+                }
+
                 Close();
 
             }
