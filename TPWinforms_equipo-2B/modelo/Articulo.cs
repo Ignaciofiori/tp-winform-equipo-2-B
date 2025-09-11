@@ -8,7 +8,8 @@ namespace modelo
 {
     public class Articulo
     {
-        public int CodigoArticulo { get; set; }
+        public int Id { get; set; }
+        public string CodigoArticulo { get; set; }
         public string Nombre { get; set; }
         public string Descripcion { get; set; }
         public decimal Precio { get; set; }
@@ -18,7 +19,7 @@ namespace modelo
         public Marca Marca { get; set; }
 
         //Categoria class Categoria
-        public int IdCategoria { get; set; }//No es Necesario
+        //public int IdCategoria { get; set; }//No es Necesario
         public Categoria Categoria { get; set; }
 
         //Imagen class Imagen

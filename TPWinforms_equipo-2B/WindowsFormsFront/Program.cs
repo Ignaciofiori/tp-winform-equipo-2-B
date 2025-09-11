@@ -16,6 +16,7 @@ namespace WindowsFormsFront
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+            //Application.Run(new ArticuloCrearForm());
             Application.Run(new FormPrincipal());
         }
     }

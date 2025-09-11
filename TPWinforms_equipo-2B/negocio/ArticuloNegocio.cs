@@ -7,34 +7,37 @@ using System.Threading.Tasks;
 
 namespace negocio
 {
-    internal class ArticuloNegocio
+    public class ArticuloNegocio
     {
-        public List<Articulo> Listar()
+        public List<Articulo> ListarArticulos()
         {
             List<Articulo> lista = new List<Articulo>();
             AccesoDatos datos = new AccesoDatos();
+            ImagenNegocio imagenNegocio = new ImagenNegocio();
 
             try
             {
-                datos.setearConsulta("SELECT A.Id, A.Codigo, A.Nombre, A.Descripcion, M.Descripcion as Marca, C.Descripcion as Categoria, A.ImagenUrl, A.Precio FROM ARTICULOS A, MARCAS M, CATEGORIAS C WHERE A.IdMarca = M.Id AND A.IdCategoria = C.Id");
-
+                datos.setearConsulta("SELECT A.Id, A.Codigo, A.Nombre, A.Descripcion, M.Descripcion as Marca, C.Descripcion as Categoria, A.Precio, A.IdCategoria, A.IdMarca FROM ARTICULOS A, MARCAS M, CATEGORIAS C WHERE A.IdMarca = M.Id AND A.IdCategoria = C.Id\r\n");
                 datos.ejecutarLectura();
 
                 while (datos.Lector.Read())
                 {
                     Articulo aux = new Articulo();
-                    aux.CodigoArticulo = (int)datos.Lector["Codigo"];
+                    aux.Id = (int)datos.Lector["Id"];
+                    aux.CodigoArticulo = (string)datos.Lector["Codigo"];
                     aux.Nombre = (string)datos.Lector["Nombre"];
                     aux.Descripcion = (string)datos.Lector["Descripcion"];
                     aux.Precio = (decimal)datos.Lector["Precio"];
 
                     aux.Marca = new Marca();
                     aux.Marca.Descripcion = (string)datos.Lector["Marca"];
+                    aux.Marca.Id = (int)datos.Lector["IdMarca"];
 
                     aux.Categoria = new Categoria();
                     aux.Categoria.Descripcion = (string)datos.Lector["Categoria"];
+                    aux.Categoria.Id = (int)datos.Lector["IdCategoria"];
 
-                    aux.Imagenes = ListarImagenesPorArticulo(aux.CodigoArticulo);
+                    aux.Imagenes = imagenNegocio.ListarImagenesPorArticulo(aux.Id);
 
                     lista.Add(aux);
                 }
@@ -51,26 +54,48 @@ namespace negocio
             }
         }
 
-        public List<Imagen> ListarImagenesPorArticulo(int IdArticulo)
+        public void agregarArticulo(Articulo articulo)
         {
-            List<Imagen> lista = new List<Imagen>();
             AccesoDatos datos = new AccesoDatos();
 
             try
             {
-                datos.setearConsulta("SELECT Id, IdArticulo, ImagenURL FROM IMAGENES WHERE IdArticulo = " + IdArticulo);
-                datos.ejecutarLectura();
+                datos.setearConsulta("INSERT INTO Articulos (Codigo,Nombre,Descripcion,Precio,IdMarca,IdCategoria) values ( @Codigo ,@Nombre , @Descripcion , @Precio , @IdMarca, @IdCategoria)");
+                datos.setearParametros("@Codigo", articulo.CodigoArticulo);
+                datos.setearParametros("@Nombre", articulo.Nombre);
+                datos.setearParametros("@Descripcion", articulo.Descripcion);
+                datos.setearParametros("@Precio", articulo.Precio);
+                datos.setearParametros("@IdMarca", articulo.Marca.Id);
+                datos.setearParametros("@IdCategoria", articulo.Categoria.Id);
+                datos.ejecutarAccion();
+            }
+            catch (Exception)
+            {
 
-                while (datos.Lector.Read())
-                {
-                    Imagen aux = new Imagen();
-                    aux.Id = (int)datos.Lector["Id"];
-                    aux.IdArticulo = (int)datos.Lector["IdArticulo"];
-                    aux.ImagenURL = (string)datos.Lector["ImagenURL"];
-                    lista.Add(aux);
-                }
+                throw;
+            }
+            finally
+            {
+                datos.cerrarConexion( );
+            }
 
-                return lista;
+        }
+
+        public void modificarArticulo(Articulo articulo)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearConsulta("UPDATE ARTICULOS SET Codigo=@Codigo, Nombre=@Nombre, Descripcion=@Descripcion, Precio=@Precio, IdMarca=@IdMarca, IdCategoria=@IdCategoria WHERE Id=@Id");
+                datos.setearParametros("@Codigo", articulo.CodigoArticulo);
+                datos.setearParametros("@Nombre", articulo.Nombre);
+                datos.setearParametros("@Descripcion", articulo.Descripcion);
+                datos.setearParametros("@Precio", articulo.Precio);
+                datos.setearParametros("@IdMarca", articulo.Marca.Id);
+                datos.setearParametros("@IdCategoria", articulo.Categoria.Id);
+                datos.setearParametros("@Id", articulo.Id);
+                
+                datos.ejecutarAccion();
             }
             catch (Exception ex)
             {
@@ -81,5 +106,6 @@ namespace negocio
                 datos.cerrarConexion();
             }
         }
+
     }
 }
