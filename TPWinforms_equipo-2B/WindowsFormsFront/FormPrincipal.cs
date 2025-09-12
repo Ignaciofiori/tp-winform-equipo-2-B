@@ -25,7 +25,6 @@ namespace WindowsFormsFront
         private void FormPrincipal_Load(object sender, EventArgs e)
         {
             
-
             try
             {
                 CategoriaNegocio negocioCategoria = new CategoriaNegocio();
@@ -68,6 +67,26 @@ namespace WindowsFormsFront
 
             ArticuloCrearForm modificar = new ArticuloCrearForm(seleccionado);
             modificar.ShowDialog();
+        }
+
+        private void btnEliminarFisico_Click(object sender, EventArgs e)
+        {
+            ArticuloNegocio negocio = new ArticuloNegocio();
+            Articulo seleccionado;
+            try
+            {
+                DialogResult respuesta =  MessageBox.Show("Quiere eliminar el articulo seleccionado?", "Eliminando", MessageBoxButtons.YesNo, MessageBoxIcon.Warning );
+                if(respuesta == DialogResult.Yes)
+                {
+                    seleccionado = (Articulo)dgvArticulos.CurrentRow.DataBoundItem;
+                    negocio.eliminarFisico(seleccionado.Id);
+                    
+                }
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
         }
     }
 }
