@@ -92,6 +92,7 @@
             this.pbPricinpalArticulos.Size = new System.Drawing.Size(446, 417);
             this.pbPricinpalArticulos.TabIndex = 6;
             this.pbPricinpalArticulos.TabStop = false;
+            this.pbPricinpalArticulos.Click += new System.EventHandler(this.pbPricinpalArticulos_Click);
             // 
             // FormPrincipal
             // 

@@ -14,9 +14,10 @@ namespace WindowsFormsFront
 {
     public partial class FormPrincipal : Form
     {
-        private List<Categoria> listaCategorias;
+        
         private List<Articulo> listaArticulos;
-        private List<Marca> listaMarcas;
+        private List<Imagen> imagenesArticuloSeleccionado;
+        private int indiceImagen = 0;
         public FormPrincipal()
         {
             InitializeComponent();
@@ -96,16 +97,17 @@ namespace WindowsFormsFront
         }
 
         private void dgvArticulos_SelectionChanged(object sender, EventArgs e)
-        {   
+        {
+            if (dgvArticulos.CurrentRow == null) return;
             ImagenNegocio imagenNegocio = new ImagenNegocio();
-            List<Imagen> listaImagenes = new List<Imagen>();
             Articulo seleccionado = (Articulo)dgvArticulos.CurrentRow.DataBoundItem;
 
-            listaImagenes = imagenNegocio.ListarImagenesPorArticulo(seleccionado.Id);
+            imagenesArticuloSeleccionado = imagenNegocio.ListarImagenesPorArticulo(seleccionado.Id);
+            indiceImagen = 0;
 
-            if (listaImagenes.Count > 0)
+            if (imagenesArticuloSeleccionado.Count > 0)
             {
-                string UrlImagenSeleccionada = listaImagenes[0].ImagenURL;
+                string UrlImagenSeleccionada = imagenesArticuloSeleccionado[indiceImagen].ImagenURL;
 
                 cargarImagen(UrlImagenSeleccionada);
             }
@@ -114,6 +116,17 @@ namespace WindowsFormsFront
                 cargarImagen("https://dummyimage.com/300x300/cccccc/000000.png&text=Imagen+no+disponible");
             }
 
+        }
+
+        private void pbPricinpalArticulos_Click(object sender, EventArgs e)
+        {
+            if (imagenesArticuloSeleccionado.Count == 0) return;
+            indiceImagen ++;
+            if(indiceImagen >= imagenesArticuloSeleccionado.Count)
+            {
+                indiceImagen = 0;
+            }
+            cargarImagen(imagenesArticuloSeleccionado[indiceImagen].ImagenURL);
         }
     }
 }
