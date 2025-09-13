@@ -28,58 +28,34 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.dgvCategorias = new System.Windows.Forms.DataGridView();
             this.dgvArticulos = new System.Windows.Forms.DataGridView();
-            this.dgvMarcas = new System.Windows.Forms.DataGridView();
             this.btnAgregar = new System.Windows.Forms.Button();
             this.btnModificar = new System.Windows.Forms.Button();
             this.btnEliminarFisico = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvCategorias)).BeginInit();
+            this.pbPricinpalArticulos = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvArticulos)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvMarcas)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbPricinpalArticulos)).BeginInit();
             this.SuspendLayout();
-            // 
-            // dgvCategorias
-            // 
-            this.dgvCategorias.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvCategorias.Location = new System.Drawing.Point(45, 49);
-            this.dgvCategorias.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.dgvCategorias.Name = "dgvCategorias";
-            this.dgvCategorias.RowHeadersWidth = 51;
-            this.dgvCategorias.RowTemplate.Height = 24;
-            this.dgvCategorias.Size = new System.Drawing.Size(533, 188);
-            this.dgvCategorias.TabIndex = 0;
             // 
             // dgvArticulos
             // 
             this.dgvArticulos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvArticulos.Location = new System.Drawing.Point(45, 275);
-            this.dgvArticulos.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.dgvArticulos.Location = new System.Drawing.Point(12, 36);
             this.dgvArticulos.Name = "dgvArticulos";
             this.dgvArticulos.RowHeadersWidth = 51;
             this.dgvArticulos.RowTemplate.Height = 24;
-            this.dgvArticulos.Size = new System.Drawing.Size(664, 225);
+            this.dgvArticulos.Size = new System.Drawing.Size(1061, 417);
             this.dgvArticulos.TabIndex = 1;
-            // 
-            // dgvMarcas
-            // 
-            this.dgvMarcas.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvMarcas.Location = new System.Drawing.Point(644, 49);
-            this.dgvMarcas.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.dgvMarcas.Name = "dgvMarcas";
-            this.dgvMarcas.RowHeadersWidth = 51;
-            this.dgvMarcas.RowTemplate.Height = 24;
-            this.dgvMarcas.Size = new System.Drawing.Size(533, 188);
-            this.dgvMarcas.TabIndex = 2;
-            this.dgvMarcas.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvMarcas_CellContentClick);
+            this.dgvArticulos.SelectionChanged += new System.EventHandler(this.dgvArticulos_SelectionChanged);
             // 
             // btnAgregar
             // 
             this.btnAgregar.BackColor = System.Drawing.SystemColors.Menu;
             this.btnAgregar.ForeColor = System.Drawing.Color.Black;
-            this.btnAgregar.Location = new System.Drawing.Point(45, 520);
+            this.btnAgregar.Location = new System.Drawing.Point(28, 458);
+            this.btnAgregar.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnAgregar.Name = "btnAgregar";
-            this.btnAgregar.Size = new System.Drawing.Size(113, 38);
+            this.btnAgregar.Size = new System.Drawing.Size(100, 30);
             this.btnAgregar.TabIndex = 3;
             this.btnAgregar.Text = "Agregar";
             this.btnAgregar.UseVisualStyleBackColor = false;
@@ -88,9 +64,10 @@
             // btnModificar
             // 
             this.btnModificar.BackColor = System.Drawing.SystemColors.Menu;
-            this.btnModificar.Location = new System.Drawing.Point(164, 520);
+            this.btnModificar.Location = new System.Drawing.Point(134, 458);
+            this.btnModificar.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnModificar.Name = "btnModificar";
-            this.btnModificar.Size = new System.Drawing.Size(103, 38);
+            this.btnModificar.Size = new System.Drawing.Size(92, 30);
             this.btnModificar.TabIndex = 4;
             this.btnModificar.Text = "Modificar";
             this.btnModificar.UseVisualStyleBackColor = false;
@@ -99,45 +76,49 @@
             // btnEliminarFisico
             // 
             this.btnEliminarFisico.BackColor = System.Drawing.SystemColors.Menu;
-            this.btnEliminarFisico.Location = new System.Drawing.Point(273, 520);
+            this.btnEliminarFisico.Location = new System.Drawing.Point(232, 458);
+            this.btnEliminarFisico.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnEliminarFisico.Name = "btnEliminarFisico";
-            this.btnEliminarFisico.Size = new System.Drawing.Size(103, 38);
+            this.btnEliminarFisico.Size = new System.Drawing.Size(92, 30);
             this.btnEliminarFisico.TabIndex = 5;
             this.btnEliminarFisico.Text = "Eliminar F.";
             this.btnEliminarFisico.UseVisualStyleBackColor = false;
             this.btnEliminarFisico.Click += new System.EventHandler(this.btnEliminarFisico_Click);
             // 
+            // pbPricinpalArticulos
+            // 
+            this.pbPricinpalArticulos.Location = new System.Drawing.Point(1100, 36);
+            this.pbPricinpalArticulos.Name = "pbPricinpalArticulos";
+            this.pbPricinpalArticulos.Size = new System.Drawing.Size(446, 417);
+            this.pbPricinpalArticulos.TabIndex = 6;
+            this.pbPricinpalArticulos.TabStop = false;
+            // 
             // FormPrincipal
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1182, 592);
+            this.ClientSize = new System.Drawing.Size(1591, 532);
+            this.Controls.Add(this.pbPricinpalArticulos);
             this.Controls.Add(this.btnEliminarFisico);
             this.Controls.Add(this.btnModificar);
             this.Controls.Add(this.btnAgregar);
-            this.Controls.Add(this.dgvMarcas);
             this.Controls.Add(this.dgvArticulos);
-            this.Controls.Add(this.dgvCategorias);
-            this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "FormPrincipal";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Aplicacion de Gestion: ";
             this.Load += new System.EventHandler(this.FormPrincipal_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.dgvCategorias)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvArticulos)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvMarcas)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbPricinpalArticulos)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
-
-        private System.Windows.Forms.DataGridView dgvCategorias;
         private System.Windows.Forms.DataGridView dgvArticulos;
-        private System.Windows.Forms.DataGridView dgvMarcas;
         private System.Windows.Forms.Button btnAgregar;
         private System.Windows.Forms.Button btnModificar;
         private System.Windows.Forms.Button btnEliminarFisico;
+        private System.Windows.Forms.PictureBox pbPricinpalArticulos;
     }
 }
 

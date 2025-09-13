@@ -39,7 +39,28 @@ namespace negocio
                 datos.cerrarConexion();
             }
         }
-    
-    
+
+        public void AgregarImagen(int articuloId, string urlImagen)
+            {
+                AccesoDatos datos = new AccesoDatos();
+
+                try
+                {
+                    datos.setearConsulta("INSERT INTO Imagenes (IdArticulo, ImagenUrl) VALUES (@IdArticulo, @ImagenUrl)");
+                    datos.setearParametros("@IdArticulo", articuloId);
+                    datos.setearParametros("@ImagenUrl", urlImagen);
+
+                    datos.ejecutarAccion();
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Error al insertar la imagen: " + ex.Message);
+                }
+                finally
+                {
+                    datos.cerrarConexion();
+                }
+            }
+        
     }
-}
+    }

@@ -67,31 +67,36 @@ namespace negocio
             }
         }
 
-        public void agregarArticulo(Articulo articulo)
+        public int agregarArticulo(Articulo articulo)
         {
+            int idGenerado = 0;
             AccesoDatos datos = new AccesoDatos();
-
             try
             {
-                datos.setearConsulta("INSERT INTO Articulos (Codigo,Nombre,Descripcion,Precio,IdMarca,IdCategoria) values ( @Codigo ,@Nombre , @Descripcion , @Precio , @IdMarca, @IdCategoria)");
+                datos.setearConsulta("INSERT INTO Articulos (Codigo, Nombre, Descripcion, Precio, IdMarca, IdCategoria) " +
+                                     "VALUES (@Codigo, @Nombre, @Descripcion, @Precio, @IdMarca, @IdCategoria); " +
+                                     "SELECT CAST(SCOPE_IDENTITY() AS INT);");
                 datos.setearParametros("@Codigo", articulo.CodigoArticulo);
                 datos.setearParametros("@Nombre", articulo.Nombre);
                 datos.setearParametros("@Descripcion", articulo.Descripcion);
                 datos.setearParametros("@Precio", articulo.Precio);
                 datos.setearParametros("@IdMarca", articulo.Marca.Id);
                 datos.setearParametros("@IdCategoria", articulo.Categoria.Id);
-                datos.ejecutarAccion();
+
+                datos.command.Connection = datos.connection;
+                datos.connection.Open();
+                idGenerado = (int)datos.command.ExecuteScalar(); // ya ejecuta el insert y devuelve el id
             }
             catch (Exception)
             {
-
                 throw;
             }
             finally
             {
-                datos.cerrarConexion( );
+                if (datos.connection.State != System.Data.ConnectionState.Closed)
+                    datos.connection.Close();
             }
-
+            return idGenerado;
         }
 
         public void modificarArticulo(Articulo articulo)

@@ -27,18 +27,11 @@ namespace WindowsFormsFront
             
             try
             {
-                CategoriaNegocio negocioCategoria = new CategoriaNegocio();
-                listaCategorias = negocioCategoria.listarCategorias();
-                dgvCategorias.DataSource = listaCategorias;
+
 
                 ArticuloNegocio articuloNegocio = new ArticuloNegocio();
                 listaArticulos = articuloNegocio.ListarArticulos();
                 dgvArticulos.DataSource = listaArticulos;
-
-
-                MarcaNegocio marcaNegocio = new MarcaNegocio();
-                listaMarcas = marcaNegocio.listarMarcas();
-                dgvMarcas.DataSource = listaMarcas;
 
             }
             catch (Exception ex)
@@ -87,6 +80,40 @@ namespace WindowsFormsFront
             {
                 MessageBox.Show(ex.ToString());
             }
+        }
+
+        public void cargarImagen(string urlImagen)
+        {
+            try
+            {
+                pbPricinpalArticulos.Load(urlImagen);
+            }
+            catch (Exception ex)
+            {
+
+                pbPricinpalArticulos.Load("https://dummyimage.com/300x300/cccccc/000000.png&text=Imagen+no+disponible");
+            }
+        }
+
+        private void dgvArticulos_SelectionChanged(object sender, EventArgs e)
+        {   
+            ImagenNegocio imagenNegocio = new ImagenNegocio();
+            List<Imagen> listaImagenes = new List<Imagen>();
+            Articulo seleccionado = (Articulo)dgvArticulos.CurrentRow.DataBoundItem;
+
+            listaImagenes = imagenNegocio.ListarImagenesPorArticulo(seleccionado.Id);
+
+            if (listaImagenes.Count > 0)
+            {
+                string UrlImagenSeleccionada = listaImagenes[0].ImagenURL;
+
+                cargarImagen(UrlImagenSeleccionada);
+            }
+            else
+            {
+                cargarImagen("https://dummyimage.com/300x300/cccccc/000000.png&text=Imagen+no+disponible");
+            }
+
         }
     }
 }

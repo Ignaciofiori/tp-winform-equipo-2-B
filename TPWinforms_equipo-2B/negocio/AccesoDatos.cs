@@ -9,9 +9,9 @@ namespace negocio
 {
     public class AccesoDatos
     {
-        private SqlConnection connection { get; set; }
-        private SqlCommand command { get; set; }
-        private SqlDataReader lector { get; set; }
+        public SqlConnection connection { get; set; }
+        public SqlCommand command { get; set; }
+        public SqlDataReader lector { get; set; }
         public SqlDataReader Lector
         {
             get { return lector; }
@@ -19,8 +19,9 @@ namespace negocio
 
         public AccesoDatos()
         {
-            //   connection = new SqlConnection("Server=localhost,1433;Database=CATALOGO_P3_DB;User Id=sa;Password=BaseDeDatos#2;TrustServerCertificate=True;Integrated Security=False;");
-            connection = new SqlConnection("Server=DANA\\SQLEXPRESS;Database=CATALOGO_P3_DB;Trusted_Connection=True;TrustServerCertificate=True;"); command = new SqlCommand();
+            connection = new SqlConnection("Server=localhost,1433;Database=CATALOGO_P3_DB;User Id=sa;Password=BaseDeDatos#2;TrustServerCertificate=True;Integrated Security=False;");
+            //connection = new SqlConnection("Server=DANA\\SQLEXPRESS;Database=CATALOGO_P3_DB;Trusted_Connection=True;TrustServerCertificate=True;"); 
+            command = new SqlCommand();
         }
 
 
@@ -49,8 +50,8 @@ namespace negocio
             if (lector != null)
             {
                 lector.Close();
-                connection.Close();
             }
+            connection.Close();
         }
 
         public void ejecutarAccion()

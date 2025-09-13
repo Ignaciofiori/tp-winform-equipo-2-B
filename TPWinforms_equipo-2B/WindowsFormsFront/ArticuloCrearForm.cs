@@ -5,17 +5,23 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Configuration;
 
 namespace WindowsFormsFront
 {
     public partial class ArticuloCrearForm : Form
     {
         private Articulo articulo = null;
+
+        private OpenFileDialog archivo = null;
+
+        private string UrlImagen = null;
         public ArticuloCrearForm()
         {
             InitializeComponent();
@@ -68,6 +74,18 @@ namespace WindowsFormsFront
 
         }
 
+        public void cargarImagen(string urlImagen)
+        {
+            try
+            {
+                pbImagenCrear.Load(urlImagen);
+            }
+            catch (Exception ex)
+            {
+
+                pbImagenCrear.Load("https://dummyimage.com/300x300/cccccc/000000.png&text=Imagen+no+disponible");
+            }
+        }
         private void label1_Click_1(object sender, EventArgs e)
         {
 
@@ -95,29 +113,46 @@ namespace WindowsFormsFront
 
         private void CrearArticuloButton_Click(object sender, EventArgs e)
         {
-            ArticuloNegocio negocio = new ArticuloNegocio();
+            ArticuloNegocio negocioArticulo = new ArticuloNegocio();
+            ImagenNegocio imagenNegocio = new ImagenNegocio();
             Articulo articuloNuevo = new Articulo();
             try
             {
-                if (articulo == null)
-                    articuloNuevo = new Articulo();
 
-                articulo.CodigoArticulo = CodArticuloTextBox.Text;
-                articulo.Nombre = NombreArticuloTextBox.Text;
-                articulo.Descripcion = DescripcionArticuloTextBox.Text;
-                articulo.Precio = PrecioNumericUpDown.Value;
-                articulo.Marca = (Marca)MarcaArticuloComboBox.SelectedItem;
-                articulo.Categoria = (Categoria)CategoriaArticuloComboBox.SelectedItem;
+                    articuloNuevo.CodigoArticulo = CodArticuloTextBox.Text;
+                    articuloNuevo.Nombre = NombreArticuloTextBox.Text;
+                    articuloNuevo.Descripcion = DescripcionArticuloTextBox.Text;
+                    articuloNuevo.Precio = PrecioNumericUpDown.Value;
+                    articuloNuevo.Marca = (Marca)MarcaArticuloComboBox.SelectedItem;
+                    articuloNuevo.Categoria = (Categoria)CategoriaArticuloComboBox.SelectedItem;
+                    
+                    UrlImagen = ImagenTextBox.Text;
 
-                if (articulo.Id != 0)
+
+
+                if (archivo != null && !(ImagenTextBox.Text.ToUpper().Contains("HTTP")))
                 {
-                    negocio.modificarArticulo(articulo);
+                    //guardo imagen
+                    string carpeta = ConfigurationManager.AppSettings["images-folder"];
+                    string nombre = Path.GetFileNameWithoutExtension(archivo.SafeFileName);
+                    string extension = Path.GetExtension(archivo.SafeFileName);
+                    string timestamp = DateTime.Now.ToString("yyyyMMdd_HHmmss");
+
+                    string destino = Path.Combine(carpeta, nombre + "_" + timestamp + extension);
+
+                    File.Copy(archivo.FileName, destino);
+                }
+
+                if (articulo!= null)
+                {   
+                    negocioArticulo.modificarArticulo(articulo);
                     MessageBox.Show("Modificado correctamente!!");
                 }
                 else
                 {
-                    negocio.agregarArticulo(articuloNuevo);
-                    MessageBox.Show("Agregado correctamente!!");
+                    int idArticuloGenerado = negocioArticulo.agregarArticulo(articuloNuevo);
+                    imagenNegocio.AgregarImagen(idArticuloGenerado, UrlImagen);
+                    MessageBox.Show("Agregado correct   amente!!");
                 }
 
                 Close();
@@ -127,6 +162,24 @@ namespace WindowsFormsFront
             {
                 MessageBox.Show(ex.ToString());
             }
+        }
+
+        private void buttonAgregarImagen_Click(object sender, EventArgs e)
+        {
+            archivo = new OpenFileDialog();
+            archivo.Filter = "jpg|*.jpg;|png|*.png";
+            if (archivo.ShowDialog() == DialogResult.OK)
+            { 
+                ImagenTextBox.Text= archivo.FileName;
+                cargarImagen(archivo.FileName);
+
+                
+            }
+        }
+
+        private void ImagenTextBox_Leave(object sender, EventArgs e)
+        {
+            cargarImagen(ImagenTextBox.Text);
         }
     }
 }
