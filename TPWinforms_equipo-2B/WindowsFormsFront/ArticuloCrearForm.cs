@@ -22,6 +22,8 @@ namespace WindowsFormsFront
         private OpenFileDialog archivo = null;
 
         private string UrlImagen = null;
+
+        private int idArticuloGenerado = 0;
         public ArticuloCrearForm()
         {
             InitializeComponent();
@@ -115,54 +117,73 @@ namespace WindowsFormsFront
         {
             ArticuloNegocio negocioArticulo = new ArticuloNegocio();
             ImagenNegocio imagenNegocio = new ImagenNegocio();
-            Articulo articuloNuevo = new Articulo();
+            Articulo articuloNuevo = null;
+
             try
             {
-
+                if (articulo == null)
+                {
+                    // Creamos uno nuevo si no existe
+                    articuloNuevo = new Articulo();
                     articuloNuevo.CodigoArticulo = CodArticuloTextBox.Text;
                     articuloNuevo.Nombre = NombreArticuloTextBox.Text;
                     articuloNuevo.Descripcion = DescripcionArticuloTextBox.Text;
                     articuloNuevo.Precio = PrecioNumericUpDown.Value;
                     articuloNuevo.Marca = (Marca)MarcaArticuloComboBox.SelectedItem;
                     articuloNuevo.Categoria = (Categoria)CategoriaArticuloComboBox.SelectedItem;
-                    
-                    UrlImagen = ImagenTextBox.Text;
 
+                    // Agregar artículo
+                    idArticuloGenerado = negocioArticulo.agregarArticulo(articuloNuevo);
+                    MessageBox.Show("Agregado correctamente!!");
+                }
+                else
+                {
+                    // Modificar artículo existente
+                    articulo.CodigoArticulo = CodArticuloTextBox.Text;
+                    articulo.Nombre = NombreArticuloTextBox.Text;
+                    articulo.Descripcion = DescripcionArticuloTextBox.Text;
+                    articulo.Precio = PrecioNumericUpDown.Value;
+                    articulo.Marca = (Marca)MarcaArticuloComboBox.SelectedItem;
+                    articulo.Categoria = (Categoria)CategoriaArticuloComboBox.SelectedItem;
 
+                    idArticuloGenerado = articulo.Id;
+                    negocioArticulo.modificarArticulo(articulo);
+                    MessageBox.Show("Modificado correctamente!!");
+                }
 
+                // Guardar imagen si se seleccionó
                 if (archivo != null && !(ImagenTextBox.Text.ToUpper().Contains("HTTP")))
                 {
-                    //guardo imagen
-                    string carpeta = ConfigurationManager.AppSettings["images-folder"];
+
+                    string carpeta = ConfigurationManager.AppSettings["images-folder"]; // Ej: "imagenes"
                     string nombre = Path.GetFileNameWithoutExtension(archivo.SafeFileName);
                     string extension = Path.GetExtension(archivo.SafeFileName);
                     string timestamp = DateTime.Now.ToString("yyyyMMdd_HHmmss");
 
                     string destino = Path.Combine(carpeta, nombre + "_" + timestamp + extension);
 
-                    File.Copy(archivo.FileName, destino);
-                }
+                    // Copia el archivo a la carpeta del proyecto
+                    File.Copy(archivo.FileName, destino, true);
 
-                if (articulo!= null)
-                {   
-                    negocioArticulo.modificarArticulo(articulo);
-                    MessageBox.Show("Modificado correctamente!!");
+                    // Guarda **ruta relativa** en la DB
+                    UrlImagen = Path.Combine(carpeta, nombre + "_" + timestamp + extension);
+                    ///
                 }
                 else
                 {
-                    int idArticuloGenerado = negocioArticulo.agregarArticulo(articuloNuevo);
-                    imagenNegocio.AgregarImagen(idArticuloGenerado, UrlImagen);
-                    MessageBox.Show("Agregado correct   amente!!");
+                    UrlImagen = ImagenTextBox.Text;
                 }
 
+                imagenNegocio.AgregarImagen(idArticuloGenerado, UrlImagen);
                 Close();
-
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString());
             }
+
         }
+
 
         private void buttonAgregarImagen_Click(object sender, EventArgs e)
         {
@@ -172,7 +193,7 @@ namespace WindowsFormsFront
             { 
                 ImagenTextBox.Text= archivo.FileName;
                 cargarImagen(archivo.FileName);
-
+                
                 
             }
         }

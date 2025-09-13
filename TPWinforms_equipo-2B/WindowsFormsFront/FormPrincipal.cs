@@ -23,6 +23,22 @@ namespace WindowsFormsFront
             InitializeComponent();
         }
 
+        private void cargar()
+        {
+            ArticuloNegocio negocio = new ArticuloNegocio();
+            try
+            {
+                listaArticulos = negocio.ListarArticulos();
+                dgvArticulos.DataSource = listaArticulos;
+               
+             
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
+
         private void FormPrincipal_Load(object sender, EventArgs e)
         {
             
@@ -47,6 +63,8 @@ namespace WindowsFormsFront
         {   
             ArticuloCrearForm altaArticulo = new ArticuloCrearForm();
             altaArticulo.ShowDialog();
+
+            cargar();
         }
 
         private void dgvMarcas_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -61,6 +79,10 @@ namespace WindowsFormsFront
 
             ArticuloCrearForm modificar = new ArticuloCrearForm(seleccionado);
             modificar.ShowDialog();
+
+            cargar();
+
+
         }
 
         private void btnEliminarFisico_Click(object sender, EventArgs e)
@@ -74,6 +96,7 @@ namespace WindowsFormsFront
                 {
                     seleccionado = (Articulo)dgvArticulos.CurrentRow.DataBoundItem;
                     negocio.eliminarFisico(seleccionado.Id);
+                    cargar();
                     
                 }
             }
