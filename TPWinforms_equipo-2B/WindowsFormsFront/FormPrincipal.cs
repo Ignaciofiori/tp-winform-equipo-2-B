@@ -50,6 +50,12 @@ namespace WindowsFormsFront
                 listaArticulos = articuloNegocio.ListarArticulos();
                 dgvArticulos.DataSource = listaArticulos;
 
+                cboCampo.Items.Add("Id");
+                cboCampo.Items.Add("Código");
+                cboCampo.Items.Add("Nombre");
+                cboCampo.Items.Add("Descripción");
+                cboCampo.Items.Add("Precio");
+
             }
             catch (Exception ex)
             {
@@ -150,6 +156,45 @@ namespace WindowsFormsFront
                 indiceImagen = 0;
             }
             cargarImagen(imagenesArticuloSeleccionado[indiceImagen].ImagenURL);
+        }
+
+        private void cboCampo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string opcion = cboCampo.SelectedItem.ToString();
+            cboCriterio.Items.Clear();
+
+            if (opcion == "Id" || opcion == "Código")
+            {
+                cboCriterio.Items.Add("Igual a");
+            }
+            else if (opcion == "Nombre" || opcion == "Descripción")
+            {
+                cboCriterio.Items.Add("Comienza con");
+                cboCriterio.Items.Add("Termina con");
+                cboCriterio.Items.Add("Contiene");
+            }
+            else if (opcion == "Precio")
+            {
+                cboCriterio.Items.Add("Mayor a");
+                cboCriterio.Items.Add("Menor a");
+                cboCriterio.Items.Add("Igual a");
+            }
+        }
+
+        private void btnBuscar_Click(object sender, EventArgs e)
+        {
+            ArticuloNegocio negocio = new ArticuloNegocio();
+            try
+            {
+                string campo = cboCampo.SelectedItem.ToString();
+                string criterio = cboCriterio.SelectedItem.ToString();
+                string filtro = tboFiltro.Text;
+                dgvArticulos.DataSource = negocio.BuscarArticulo(campo, criterio, filtro);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
         }
     }
 }
