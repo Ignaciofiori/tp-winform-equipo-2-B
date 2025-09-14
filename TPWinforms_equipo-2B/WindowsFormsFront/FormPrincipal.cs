@@ -222,11 +222,18 @@ namespace WindowsFormsFront
 
             if(cboCampo.SelectedItem.ToString() == "Precio")
             {
-                if (!soloNumeros(tboFiltro.Text))
+                decimal valorPrecio;
+                string filtroValidado = tboFiltro.Text.Replace(",", ".");
+                if (!decimal.TryParse(filtroValidado, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out valorPrecio))
+                {
+                    MessageBox.Show("Debe ingresar un valor numérico válido para el precio.");
+                    return true;
+                }
+                /*if (!soloNumeros(tboFiltro.Text))
                 {
                     MessageBox.Show("Debe ingresar un valor numerico para el precio.");
                     return true;
-                }
+                }*/
             }
 
             return false;

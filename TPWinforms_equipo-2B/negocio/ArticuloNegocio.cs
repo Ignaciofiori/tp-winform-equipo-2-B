@@ -137,18 +137,21 @@ namespace negocio
 
                 if (campo == "Precio")
                 {
+                    decimal valorPrecio = decimal.Parse(filtro.Replace(",", "."), System.Globalization.CultureInfo.InvariantCulture);
+                    string parametro = "@filtro";
                     switch (criterio)
                     {
                         case "Mayor a":
-                            consulta += "AND A.Precio > " + filtro;
+                            consulta += " AND A.Precio > " + parametro;
                             break;
                         case "Menor a":
-                            consulta += "AND A.Precio < " + filtro;
+                            consulta += " AND A.Precio < " + parametro;
                             break;
-                        default:
-                            consulta += "AND A.Precio = " + filtro;
+                        default: 
+                            consulta += " AND A.Precio = " + parametro;
                             break;
                     }
+                    datos.setearParametros(parametro, valorPrecio);
                 }
                 else if (campo == "Nombre")
                 {
@@ -204,14 +207,13 @@ namespace negocio
                     consulta += "AND A.Codigo = '" + filtro + "'";
                 }
 
-                    datos.setearConsulta(consulta);
+                datos.setearConsulta(consulta);
                 datos.ejecutarLectura();
 
                 while(datos.Lector.Read())
                 {
                     Articulo aux = new Articulo();
                     aux.Id = (int)datos.Lector["Id"];
-                   // if (!(datos.Lector["Codigo"] is DBNull))
                         aux.CodigoArticulo = (string)datos.Lector["Codigo"];
                     if (!(datos.Lector["Nombre"] is DBNull))
                         aux.Nombre = (string)datos.Lector["Nombre"];
@@ -221,11 +223,9 @@ namespace negocio
                         aux.Precio = (decimal)datos.Lector["Precio"];
 
                     aux.Marca = new Marca();
-                    //if (!(datos.Lector["Marca"] is DBNull))
                         aux.Marca.Descripcion = (string)datos.Lector["Marca"];
 
                     aux.Categoria = new Categoria();
-                    //if (!(datos.Lector["Categoria"] is DBNull))
                         aux.Categoria.Descripcion = (string)datos.Lector["Categoria"];
 
                     aux.Imagenes = imagenNegocio.ListarImagenesPorArticulo(aux.Id);
