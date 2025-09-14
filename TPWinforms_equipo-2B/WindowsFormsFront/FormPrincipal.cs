@@ -51,10 +51,12 @@ namespace WindowsFormsFront
                 dgvArticulos.DataSource = listaArticulos;
 
                 cboCampo.Items.Add("Id");
-                cboCampo.Items.Add("Código");
+                cboCampo.Items.Add("Codigo");
                 cboCampo.Items.Add("Nombre");
-                cboCampo.Items.Add("Descripción");
+                cboCampo.Items.Add("Descripcion");
+                cboCampo.Items.Add("Marca");
                 cboCampo.Items.Add("Precio");
+                cboCampo.Items.Add("Categoria");
 
             }
             catch (Exception ex)
@@ -167,7 +169,7 @@ namespace WindowsFormsFront
             {
                 cboCriterio.Items.Add("Igual a");
             }
-            else if (opcion == "Nombre" || opcion == "Descripción")
+            else if (opcion == "Nombre" || opcion == "Descripcion" || opcion == "Marca" || opcion == "Categoria")
             {
                 cboCriterio.Items.Add("Comienza con");
                 cboCriterio.Items.Add("Termina con");

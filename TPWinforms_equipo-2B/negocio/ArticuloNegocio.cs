@@ -206,6 +206,21 @@ namespace negocio
                 {
                     consulta += "AND A.Codigo = '" + filtro + "'";
                 }
+                else if (campo == "Categoria")
+                {
+                    switch (criterio)
+                    {
+                        case "Comienza con":
+                            consulta += " AND C.Descripcion like '" + filtro + "%'";
+                            break;
+                        case "Termina con":
+                            consulta += " AND C.Descripcion like '%" + filtro + "'";
+                            break;
+                        default:
+                            consulta += " AND C.Descripcion like '%" + filtro + "%'";
+                            break;
+                    }
+                }
 
                 datos.setearConsulta(consulta);
                 datos.ejecutarLectura();
@@ -223,10 +238,10 @@ namespace negocio
                         aux.Precio = (decimal)datos.Lector["Precio"];
 
                     aux.Marca = new Marca();
-                        aux.Marca.Descripcion = (string)datos.Lector["Marca"];
+                    aux.Marca.Descripcion = (string)datos.Lector["Marca"];
 
                     aux.Categoria = new Categoria();
-                        aux.Categoria.Descripcion = (string)datos.Lector["Categoria"];
+                    aux.Categoria.Descripcion = (string)datos.Lector["Categoria"];
 
                     aux.Imagenes = imagenNegocio.ListarImagenesPorArticulo(aux.Id);
 
