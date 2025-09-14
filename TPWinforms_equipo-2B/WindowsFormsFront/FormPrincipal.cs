@@ -118,7 +118,7 @@ namespace WindowsFormsFront
             {
                 pbPricinpalArticulos.Load(urlImagen);
             }
-            catch (Exception ex)
+            catch
             {
 
                 pbPricinpalArticulos.Load("https://dummyimage.com/300x300/cccccc/000000.png&text=Imagen+no+disponible");
@@ -181,11 +181,35 @@ namespace WindowsFormsFront
             }
         }
 
+
+        private bool validarBuscar()
+        {
+            if (cboCampo.SelectedIndex < 0)
+            {
+                MessageBox.Show("Debe seleccionar un campo!");
+                return true;
+            }
+            if (cboCriterio.SelectedIndex < 0)
+            {
+                MessageBox.Show("Debe seleccionar un criterio!");
+                return true;
+            }
+            if (tboFiltro.Text.Trim() == "")
+            {
+                MessageBox.Show("Debe ingresar el filtro!");
+                return true;
+            }
+
+            return false;
+        }
+
         private void btnBuscar_Click(object sender, EventArgs e)
         {
             ArticuloNegocio negocio = new ArticuloNegocio();
             try
             {
+                if (validarBuscar()) return;
+
                 string campo = cboCampo.SelectedItem.ToString();
                 string criterio = cboCriterio.SelectedItem.ToString();
                 string filtro = tboFiltro.Text;

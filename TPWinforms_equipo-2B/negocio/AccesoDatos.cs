@@ -19,8 +19,8 @@ namespace negocio
 
         public AccesoDatos()
         {
-            connection = new SqlConnection("server=localhost;database=CATALOGO_P3_DB;integrated security=true;");
-            //connection = new SqlConnection("Server=DANA\\SQLEXPRESS;Database=CATALOGO_P3_DB;Trusted_Connection=True;TrustServerCertificate=True;"); 
+            //connection = new SqlConnection("server=localhost;database=CATALOGO_P3_DB;integrated security=true;");
+            connection = new SqlConnection("Server=DANA\\SQLEXPRESS;Database=CATALOGO_P3_DB;Trusted_Connection=True;TrustServerCertificate=True;"); 
             command = new SqlCommand();
         }
 
