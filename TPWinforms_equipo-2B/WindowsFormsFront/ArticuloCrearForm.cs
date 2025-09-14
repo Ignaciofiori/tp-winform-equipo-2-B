@@ -82,7 +82,7 @@ namespace WindowsFormsFront
             {
                 pbImagenCrear.Load(urlImagen);
             }
-            catch (Exception ex)
+            catch
             {
 
                 pbImagenCrear.Load("https://dummyimage.com/300x300/cccccc/000000.png&text=Imagen+no+disponible");

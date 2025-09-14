@@ -181,6 +181,17 @@ namespace WindowsFormsFront
             }
         }
 
+        private bool soloNumeros(string cadena)
+        {
+            foreach (char caracter in cadena)
+            {
+                if (!char.IsNumber(caracter))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
 
         private bool validarBuscar()
         {
@@ -198,6 +209,24 @@ namespace WindowsFormsFront
             {
                 MessageBox.Show("Debe ingresar el filtro!");
                 return true;
+            }
+
+            if (cboCampo.SelectedItem.ToString() == "Id")
+            {
+                if (!soloNumeros(tboFiltro.Text))
+                {
+                    MessageBox.Show("Debe ingresar un valor numerico para el ID.");
+                    return true;
+                }
+            }
+
+            if(cboCampo.SelectedItem.ToString() == "Precio")
+            {
+                if (!soloNumeros(tboFiltro.Text))
+                {
+                    MessageBox.Show("Debe ingresar un valor numerico para el precio.");
+                    return true;
+                }
             }
 
             return false;
@@ -219,6 +248,11 @@ namespace WindowsFormsFront
             {
                 MessageBox.Show(ex.ToString());
             }
+        }
+
+        private void tboFiltro_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

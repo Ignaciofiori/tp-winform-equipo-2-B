@@ -156,6 +156,7 @@
             this.tboFiltro.Name = "tboFiltro";
             this.tboFiltro.Size = new System.Drawing.Size(195, 26);
             this.tboFiltro.TabIndex = 12;
+            this.tboFiltro.TextChanged += new System.EventHandler(this.tboFiltro_TextChanged);
             // 
             // btnBuscar
             // 
