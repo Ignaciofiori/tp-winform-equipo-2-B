@@ -75,10 +75,6 @@ namespace WindowsFormsFront
             cargar();
         }
 
-        private void dgvMarcas_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            
-        }
 
         private void btnModificar_Click(object sender, EventArgs e)
         {
@@ -256,6 +252,18 @@ namespace WindowsFormsFront
             catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString());
+            }
+        }
+
+        private void dgvArticulos_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                Articulo articuloSeleccionado = (Articulo)dgvArticulos.Rows[e.RowIndex].DataBoundItem;
+
+                FormDetalleArticulo formDetalle = new FormDetalleArticulo(articuloSeleccionado);
+
+                formDetalle.ShowDialog();
             }
         }
 
