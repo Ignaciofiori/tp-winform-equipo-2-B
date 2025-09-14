@@ -113,6 +113,36 @@ namespace WindowsFormsFront
             this.Close();
         }
 
+        private bool ValidarCampos(Articulo articulo)
+        {
+            if (string.IsNullOrWhiteSpace(articulo.CodigoArticulo))
+            {
+                MessageBox.Show("Debe ingresar un código de artículo.");
+                return false;
+            }
+            if (string.IsNullOrWhiteSpace(articulo.Nombre))
+            {
+                MessageBox.Show("Debe ingresar un nombre.");
+                return false;
+            }
+            if (articulo.Precio <= 0)
+            {
+                MessageBox.Show("Debe ingresar un precio mayor a 0.");
+                return false;
+            }
+            //if (articulo.Marca == null)
+            //{
+            //    MessageBox.Show("Debe seleccionar una marca.");
+            //    return false;
+            //}
+            //if (articulo.Categoria == null)
+            //{
+            //    MessageBox.Show("Debe seleccionar una categoría.");
+            //    return false;
+            //}
+            return true;
+        }
+
         private void CrearArticuloButton_Click(object sender, EventArgs e)
         {
             ArticuloNegocio negocioArticulo = new ArticuloNegocio();
@@ -132,6 +162,7 @@ namespace WindowsFormsFront
                     articuloNuevo.Marca = (Marca)MarcaArticuloComboBox.SelectedItem;
                     articuloNuevo.Categoria = (Categoria)CategoriaArticuloComboBox.SelectedItem;
 
+                    if (!ValidarCampos(articuloNuevo)) return;
                     // Agregar artículo
                     idArticuloGenerado = negocioArticulo.agregarArticulo(articuloNuevo);
                     MessageBox.Show("Agregado correctamente!!");
@@ -201,6 +232,11 @@ namespace WindowsFormsFront
         private void ImagenTextBox_Leave(object sender, EventArgs e)
         {
             cargarImagen(ImagenTextBox.Text);
+        }
+
+        private void MarcaArticuloComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
